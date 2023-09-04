@@ -1,27 +1,23 @@
 import requests
 def is_online() -> bool:
     try:
-        requests.get('https://www.baidu.com/favicon.ico', timeout=3)
+        requests.get('https://www.baidu.com/favicon.ico', timeout=2)
         return True
     except:
         return False
 def login():
     if not is_online():
-        url = "http://10.0.1.5:801/eportal/portal/login"
+        url = "http://10.0.1.5/drcom/login"
         params = {
             "callback":"dr1003",
-            "login_method":"1",
-            "user_account":",0,学号", # 账号 后缀@cmcc移动@unicom联通@telecom电信
-            "user_password":"密码", # 密码
-            "wlan_user_mac":"000000000000",
-            "terminal_type":"1",
-            "lang":"zh-cn"
+            "DDDDD":"学号@运营商(例如unicom)",
+            "upass":"密码", 
             }
         try:
-            requests.request("GET", url, params=params)
+            return(requests.request("GET", url, params=params))
         except:
-            pass
+            return 'Fail to login!'
     else:
-        return True
+        return 'Already online!'
 if __name__ == '__main__':
-    login()
+    print(login())
